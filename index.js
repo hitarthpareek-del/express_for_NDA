@@ -11,7 +11,7 @@ app.use(express.json());
 
 // MongoDB Connection
 mongoose
-  .connect( "mongodb+srv://hitarthpareek_db_user:rRIzINfIr6jDYrc1@leegality.i2zmexx.mongodb.net/testingfolder?retryWrites=true&w=majority&appName=leegality")
+  .connect("mongodb+srv://hitarthpareek_db_user:rRIzINfIr6jDYrc1@leegality.i2zmexx.mongodb.net/?appName=leegality")
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
