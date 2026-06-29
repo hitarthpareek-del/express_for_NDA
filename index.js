@@ -3,44 +3,53 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
-const PORT = 3000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
-mongoose
-  .connect("mongodb+srv://hitarthpareek_db_user:rRIzINfIr6jDYrc1@leegality.i2zmexx.mongodb.net/testingfolder?retryWrites=true&w=majority&appName=leegality")
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log(err));
+// Port
+const PORT = process.env.PORT || 3000;
+
+// MongoDB URI
+const MONGODB_URI =
+  process.env.MONGODB_URI ||
+  "mongodb+srv://USERNAME:PASSWORD@leegality.i2zmexx.mongodb.net/testingfolder?retryWrites=true&w=majority&appName=leegality";
 
 // Schema
-const userSchema = new mongoose.Schema({
-  organization: {
-    type: String,
-    required: true,
+const userSchema = new mongoose.Schema(
+  {
+    organization: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    position: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
   },
-  name: {
-    type: String,
-    required: true,
-  },
-  position: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: String,
-    required: true,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 // Model
 const User = mongoose.model("User", userSchema);
 
 // Test Route
 app.get("/", (req, res) => {
-  res.send("Backend Running");
+  res.json({
+    success: true,
+    message: "Backend is running",
+  });
 });
 
 // Save User
@@ -48,31 +57,50 @@ app.post("/api/users", async (req, res) => {
   try {
     const { organization, name, position, address } = req.body;
 
-    const user = new User({
+    if (!organization || !name || !position || !address) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required.",
+      });
+    }
+
+    const user = await User.create({
       organization,
       name,
       position,
       address,
     });
 
-    await user.save();
-
     res.status(201).json({
       success: true,
-      message: "User saved successfully",
+      message: "User saved successfully.",
       data: user,
     });
   } catch (err) {
-    console.error(err);
+    console.error("Error saving user:", err);
 
     res.status(500).json({
       success: false,
-      message: "Failed to save user",
+      message: "Internal server error.",
     });
   }
 });
 
 // Start Server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+async function startServer() {
+  try {
+    await mongoose.connect(MONGODB_URI);
+
+    console.log("✅ MongoDB Connected");
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error("❌ MongoDB Connection Failed");
+    console.error(err);
+    process.exit(1);
+  }
+}
+
+startServer();
