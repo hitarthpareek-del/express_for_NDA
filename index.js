@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 // MongoDB URI
 const MONGODB_URI =
   process.env.MONGODB_URI ||
-  "mongodb+srv://USERNAME:PASSWORD@leegality.i2zmexx.mongodb.net/testingfolder?retryWrites=true&w=majority&appName=leegality";
+  "mongodb+srv://hitarthpareek_db_user:rRIzINfIr6jDYrc1@leegality.i2zmexx.mongodb.net/testingfolder?retryWrites=true&w=majority&appName=leegality";
 
 // Schema
 const userSchema = new mongoose.Schema(
