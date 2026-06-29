@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "express": "^4.17.1"
+    "cors": "^2.8.6",
+    "express": "^4.22.2",
+    "mongoose": "^9.7.3"
   },
   "scripts": {
     "start": "node index.js"
