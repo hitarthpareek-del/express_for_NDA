@@ -42,13 +42,19 @@ const createEmployee = async (req, res) => {
     */
 
     const newEmployee = await Employee.create({
-
       company,
-
       employee,
-
-      documents
-
+      documents: {
+        panCardCopy: "",
+        aadhaarCopy: "",
+        passportPhoto: "",
+        cancelledCheque: "",
+        dobProof: "",
+        educationCertificates: [],
+        salarySlips: [],
+        relievingLetter: [],
+        resume: "",
+      },
     });
 
     return res.status(201).json({
