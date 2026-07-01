@@ -5,12 +5,7 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-    },
-    pdf: {
-      data: Buffer,
-      contentType: String,
-      fileName: String,
-    },
+    }
   },
   {
     timestamps: true,
