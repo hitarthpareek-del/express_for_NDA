@@ -1,22 +1,43 @@
-require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
 
-const app = require("./app");
-const connectDB = require("./config/db");
+const User = require("./models/User");
 
-const PORT = process.env.PORT || 3000;
+const app = express();
 
-const startServer = async () => {
+app.use(cors());
+app.use(express.json());
+
+// MongoDB Connection
+mongoose
+  .connect("mongodb+srv://hitarthpareek_db_user:rRIzINfIr6jDYrc1@leegality.i2zmexx.mongodb.net/testingfolder?retryWrites=true&w=majority&appName=leegality")
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log(err));
+
+// Test Route
+app.get("/", (req, res) => {
+  res.send("Backend Running");
+});
+
+// Save Name
+app.post("/users", async (req, res) => {
   try {
-    await connectDB();
-
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
+    const user = new User({
+      name: req.body.name,
     });
-  } catch (error) {
-    console.error("❌ Failed to start server");
-    console.error(error);
-    process.exit(1);
-  }
-};
 
-startServer();
+    await user.save();
+
+    res.json({
+      message: "User Saved",
+      user,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+app.listen(3000, () => {
+  console.log("Server Running on Port 3000");
+});
