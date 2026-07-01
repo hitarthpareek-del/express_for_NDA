@@ -10,6 +10,7 @@ POST /api/employees
 const createEmployee = async (req, res) => {
   try {
     const { company, employee } = req.body;
+    console.log(req.body);
 
     // Basic Validation
     if (!company) {
