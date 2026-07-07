@@ -1,4 +1,4 @@
-const { sendToLeegality } = require("../services/leegalityService");
+const { sendToLeegality } = require("../services/leegalityServices");
 
 exports.submitDocument = async (req, res) => {
   try {
