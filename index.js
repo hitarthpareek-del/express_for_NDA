@@ -4,12 +4,18 @@ const cors = require("cors");
 const app = express();
 
 const leegalityRoutes = require("./routes/leegalityRoutes");
+const adminRoutes = require("./routes/adminRoutes");
+
+
+app.use("/api", adminRoutes);
 
 app.use("/api/leegality", leegalityRoutes);
+
 app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Working");
 });
+
 
 module.exports = app;
