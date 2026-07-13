@@ -7,7 +7,7 @@ const leegalityRoutes = require("./routes/leegalityRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 
 
-app.use("/api", adminRoutes);
+app.use("/api/leegality", adminRoutes);
 
 app.use("/api/leegality", leegalityRoutes);
 
