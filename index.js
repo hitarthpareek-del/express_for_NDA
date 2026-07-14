@@ -12,6 +12,7 @@ app.use("/api/leegality", adminRoutes);
 app.use("/api/leegality", leegalityRoutes);
 
 app.use(cors());
+app.use(express.json())
 
 app.get("/", (req, res) => {
   res.send("Working");
